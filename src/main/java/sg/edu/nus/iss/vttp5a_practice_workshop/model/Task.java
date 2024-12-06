@@ -1,15 +1,22 @@
 package sg.edu.nus.iss.vttp5a_practice_workshop.model;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import sg.edu.nus.iss.vttp5a_practice_workshop.constant.Constant;
+import sg.edu.nus.iss.vttp5a_practice_workshop.repository.MapRepo;
 
 public class Task {
+    
+    @Autowired
+    MapRepo mapRepo;
     
     private String id;
 
@@ -39,8 +46,7 @@ public class Task {
     public Task() {
     }
 
-    public Task(String id, String name, String description, LocalDate dueDate, String priority, String status,
-            LocalDate createdOn, LocalDate updatedOn) {
+    public Task(String id, String name, String description, LocalDate dueDate, String priority, String status, LocalDate createdOn, LocalDate updatedOn) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -51,7 +57,18 @@ public class Task {
         this.updatedOn = updatedOn;
     }
 
-    
+    public Task(String name, String description, LocalDate dueDate, String priority, String status) {
+        this.id = UUID.randomUUID().toString();
+        this.name = name;
+        this.description = description;
+        this.dueDate = dueDate;
+        this.priority = priority;
+        this.status = status;
+        this.createdOn = LocalDate.now();
+        this.updatedOn = LocalDate.now();
+    }
+
+
     @Override
     public String toString() {
         return id + "," + name + "," + description + "," + dueDate + "," + priority + "," + status + "," + createdOn + "," + updatedOn;

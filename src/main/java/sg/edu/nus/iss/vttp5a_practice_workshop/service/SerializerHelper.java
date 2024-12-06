@@ -3,6 +3,7 @@ package sg.edu.nus.iss.vttp5a_practice_workshop.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.json.Json;
 import jakarta.json.JsonObject;
 import sg.edu.nus.iss.vttp5a_practice_workshop.model.Task;
 
@@ -12,8 +13,8 @@ public class SerializerHelper {
     @Autowired
     DateConverter dateConverter;
 
-    // jsonTask -> Task POJO
-    public Task jsonToTask(JsonObject jsonTask){
+    // jsonObject String -> Task POJO
+    public Task jsonToPojo(JsonObject jsonTask){
         
         Task task = new Task();
             task.setId(jsonTask.getString("id"));
@@ -30,5 +31,21 @@ public class SerializerHelper {
     }
 
 
-    // 
+    // Task POJO -> jsonObject String
+    public String pojoToJson(Task task){
+
+        JsonObject taskJson = Json.createObjectBuilder()
+                                .add("id", task.getId())
+                                .add("name", task.getName())
+                                .add("description", task.getDescription())
+                                .add("dueDate", dateConverter.localDateToEpoch(task.getDueDate()))
+                                .add("priority", task.getPriority())
+                                .add("status", task.getStatus())
+                                .add("createdOn", dateConverter.localDateToEpoch(task.getCreatedOn()))
+                                .add("updatedOn", dateConverter.localDateToEpoch(task.getUpdatedOn()))
+                                .build();
+        
+        return taskJson.toString(); 
+
+    }
 }

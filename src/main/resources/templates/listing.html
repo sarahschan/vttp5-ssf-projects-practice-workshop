@@ -16,9 +16,24 @@
 
     <br>
 
-    <div>
-        <p>Filter options will go here</p>
+    <div class="d-flex justify-content-between align-items-center">
+        <!-- Create New Task Button -->
+        <a class="btn btn-primary" th:href="@{/list/create}">Create New Task</a>
+        
+        <!-- Filter Form -->
+        <form method="GET" th:action="@{/list}" class="d-flex align-items-center">
+            <label class="mr-2 mb-0">Filter by status: </label>
+            <select name="status" onchange="this.form.submit()" class="form-select">
+                <option selected disabled>Status</option>
+                <option value="">All tasks</option>
+                <option value="pending">Pending</option>
+                <option value="in progress">In Progress</option>
+                <option value="completed">Completed</option>
+            </select>
+        </form>
     </div>
+
+    <br>
 
     <div>
         <table class="table table-striped">

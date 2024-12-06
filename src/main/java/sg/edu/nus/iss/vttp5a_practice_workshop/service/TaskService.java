@@ -4,6 +4,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,12 +37,38 @@ public class TaskService {
             JsonReader jReader = Json.createReader(new StringReader(entry.getValue().toString()));
             JsonObject jsonToDo = jReader.readObject();
 
-            Task task = serializerHelper.jsonToTask(jsonToDo);
+            Task task = serializerHelper.jsonToPojo(jsonToDo);
 
             todoList.add(task);
-            
+
         }
 
         return todoList;
+    }
+
+
+    // Filter tasks by status
+    public List<Task> filterByStatus(String status, String redisKey) {
+        
+        // Get all the tasks
+        List<Task> allTasks = getAllTasks(redisKey);
+
+        // filter by status
+        List<Task> filteredTasks = allTasks.stream()
+                                    .filter(task -> task.getStatus().equalsIgnoreCase(status))
+                                    .collect(Collectors.toList());
+    
+        return filteredTasks;
+
+    }
+
+
+    public void addTask(String redisKey, String taskID, Task taskPOJO) {
+        
+        // Serialize task POJO -> JsonObject String
+        String taskJsonString = serializerHelper.pojoToJson(taskPOJO);
+
+        // Save to redis
+        mapRepo.create(redisKey, taskID, taskJsonString);
     }
 }
