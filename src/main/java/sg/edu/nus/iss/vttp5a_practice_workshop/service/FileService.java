@@ -47,6 +47,7 @@ public class FileService {
                 String dueDate = taskJson.getString("due_date");
                 String priority = taskJson.getString("priority_level");
                 String status = taskJson.getString("status");
+                    String cleanStatus = cleanStatus(status);
                 String createdOn = taskJson.getString("created_at");
                 String updatedOn = taskJson.getString("updated_at");
 
@@ -57,7 +58,7 @@ public class FileService {
                 .add("description", description)
                 .add("dueDate", dateConverter.stringToEpoch(dueDate))
                 .add("priority", priority)
-                .add("status", status)
+                .add("status", cleanStatus)
                 .add("createdOn", dateConverter.stringToEpoch(createdOn))
                 .add("updatedOn", dateConverter.stringToEpoch(updatedOn))
                 .build();
@@ -66,7 +67,19 @@ public class FileService {
             mapRepo.create(Constant.TASKKEY, id, taskJsonSave.toString());
 
         }
-
         
     }
+
+
+    // helper method to remove the irritating "_" in "in_progress"
+    private String cleanStatus(String status){
+
+        if (status.equals("in_progress")){
+            String cleanStatus = status.replace("_", " ");
+            return cleanStatus;
+        }
+
+        return status;
+    }
+
 }
