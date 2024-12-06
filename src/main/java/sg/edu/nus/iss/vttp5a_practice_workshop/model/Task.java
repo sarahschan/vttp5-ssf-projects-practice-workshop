@@ -2,14 +2,36 @@ package sg.edu.nus.iss.vttp5a_practice_workshop.model;
 
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 public class Task {
     
     private String id;
+
+        @NotBlank(message = "Name is mandatory") 
+        @Size(min = 10, max = 50, message = "Name must be between 10 and 50 characters long")
     private String name;
-    private String desc;
+
+        @NotBlank(message = "Description is mandatory") 
+        @Size(max = 225, message = "Description must be between 1 and 225 characters long")
+    private String description;
+
+        @NotNull(message = "Due date is mandatory")
+        @FutureOrPresent(message = "Due date must be today or a future date")
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dueDate;
+
+        @NotNull(message = "Description is mandatory")
     private String priority;
+
+        @NotNull(message = "Status is mandatory")
     private String status;
+
     private LocalDate createdOn;
     private LocalDate updatedOn;
     
@@ -17,11 +39,11 @@ public class Task {
     public Task() {
     }
 
-    public Task(String id, String name, String desc, LocalDate dueDate, String priority, String status,
+    public Task(String id, String name, String description, LocalDate dueDate, String priority, String status,
             LocalDate createdOn, LocalDate updatedOn) {
         this.id = id;
         this.name = name;
-        this.desc = desc;
+        this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
         this.status = status;
@@ -32,7 +54,7 @@ public class Task {
     
     @Override
     public String toString() {
-        return id + "," + name + "," + desc + "," + dueDate + "," + priority + "," + status + "," + createdOn + "," + updatedOn;
+        return id + "," + name + "," + description + "," + dueDate + "," + priority + "," + status + "," + createdOn + "," + updatedOn;
     }
 
 
@@ -52,12 +74,12 @@ public class Task {
         this.name = name;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public LocalDate getDueDate() {
