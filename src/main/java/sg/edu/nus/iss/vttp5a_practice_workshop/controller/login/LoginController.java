@@ -30,7 +30,6 @@ public class LoginController {
     public String handleLogin(@Valid @ModelAttribute("user") User user, BindingResult result, HttpSession session, Model model){
 
         // check validity of submitted details
-        System.out.println("Recieved details: " + user);
         if (result.hasErrors()){
             // System.out.println("Validation errors: " + result.getAllErrors());
             model.addAttribute("user", user);

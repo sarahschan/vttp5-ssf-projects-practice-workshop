@@ -30,7 +30,6 @@ public class ListEditController {
         
         // check if user has logged into session (because after logging out you can still press back and press this button)
         User user = (User) session.getAttribute("user");
-        System.out.println("Session attribute: " + user);
         if (user == null) {
             return "redirect:/refused";
         }
@@ -53,7 +52,6 @@ public class ListEditController {
         }
 
         // Use the appropriate constructor - Remember that the task ID and created date SHOULD NOT CHANGE
-        System.out.println("Recieved data: " + task);
         Task editedTask = new Task(task.getId(),
                                    task.getName(),
                                    task.getDescription(),
@@ -61,7 +59,6 @@ public class ListEditController {
                                    task.getPriority(),
                                    task.getStatus(),
                                    task.getCreatedOn());
-        System.out.println("Updating to: " + editedTask);
         taskService.addTask(Constant.TASKKEY, editedTask.getId(), editedTask);
         return "redirect:/list";
     }

@@ -79,7 +79,7 @@ public class TaskService {
         
         // Get the task from redis, remember it is stored as a Json String
         String foundTaskJsonString = (String) mapRepo.get(redisKey, taskID);
-        System.out.println(foundTaskJsonString);
+        System.out.println("Found in Redis" + foundTaskJsonString);
 
         // Use the Json Reader and Serializer helper to change it back into a Task POJO
         JsonReader jReader = Json.createReader(new StringReader(foundTaskJsonString));
@@ -90,4 +90,9 @@ public class TaskService {
 
     }
 
+
+    // Delete a task by ID
+    public void deleteByID(String redisKey, String taskID){
+        mapRepo.delete(redisKey, taskID);
+    }
 }

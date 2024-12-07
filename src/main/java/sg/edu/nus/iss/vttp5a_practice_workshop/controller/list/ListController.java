@@ -27,7 +27,6 @@ public class ListController {
 
         // check if user has logged into session
         User user = (User) session.getAttribute("user");
-        System.out.println("Session attribute: " + user);
         if (user == null) {
             return "redirect:/refused";
         }
