@@ -61,7 +61,7 @@
                     <td th:text="${task.status}" class="col-1"></td>
                     <td th:text="${task.createdOn}"></td>
                     <td th:text="${task.updatedOn}"></td>
-                    <td><a class="btn btn-secondary btn-sm my-1" th:href="@{#}">Edit</a>
+                    <td><a class="btn btn-secondary btn-sm my-1" th:href="@{/list/edit/{id}(id=${task.id})}">Edit</a>
                         <a class="btn btn-danger btn-sm my-1" th:href="@{#}">Delete</a></td>
                 </tr>
             </tbody>

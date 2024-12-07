@@ -48,7 +48,7 @@ public class TaskService {
 
 
     // Filter tasks by status
-    public List<Task> filterByStatus(String status, String redisKey) {
+    public List<Task> filterByStatus(String status, String redisKey){
         
         // Get all the tasks
         List<Task> allTasks = getAllTasks(redisKey);
@@ -63,7 +63,8 @@ public class TaskService {
     }
 
 
-    public void addTask(String redisKey, String taskID, Task taskPOJO) {
+    // Add a task to redis
+    public void addTask(String redisKey, String taskID, Task taskPOJO){
         
         // Serialize task POJO -> JsonObject String
         String taskJsonString = serializerHelper.pojoToJson(taskPOJO);
@@ -71,4 +72,22 @@ public class TaskService {
         // Save to redis
         mapRepo.create(redisKey, taskID, taskJsonString);
     }
+
+
+    // Find a task by ID
+    public Task findByID(String redisKey, String taskID){
+        
+        // Get the task from redis, remember it is stored as a Json String
+        String foundTaskJsonString = (String) mapRepo.get(redisKey, taskID);
+        System.out.println(foundTaskJsonString);
+
+        // Use the Json Reader and Serializer helper to change it back into a Task POJO
+        JsonReader jReader = Json.createReader(new StringReader(foundTaskJsonString));
+        JsonObject jsonToDo = jReader.readObject();
+        Task foundTask = serializerHelper.jsonToPojo(jsonToDo);
+
+        return foundTask;
+
+    }
+
 }

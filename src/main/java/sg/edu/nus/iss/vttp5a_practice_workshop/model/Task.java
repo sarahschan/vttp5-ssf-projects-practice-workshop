@@ -38,7 +38,9 @@ public class Task {
         @NotNull(message = "Status is mandatory")
     private String status;
 
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate createdOn;
+    
     private LocalDate updatedOn;
     
     
@@ -67,6 +69,17 @@ public class Task {
         this.updatedOn = LocalDate.now();
     }
 
+
+    public Task(String id, String name, String description, LocalDate dueDate, String priority, String status, LocalDate createdOn) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.dueDate = dueDate;
+        this.priority = priority;
+        this.status = status;
+        this.createdOn = createdOn;
+        this.updatedOn = LocalDate.now();
+    }
 
     @Override
     public String toString() {
