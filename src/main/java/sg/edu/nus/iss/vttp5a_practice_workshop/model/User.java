@@ -15,7 +15,7 @@ public class User {
     private String username;
 
         @NotNull(message = "Age is mandatory")
-        @Min(value = 10, message = "Age must be at least 10 years old")
+        // @Min(value = 10, message = "Age must be at least 10 years old")
         @Max(value = 120, message = "Age must not exceed 120")
     private Integer age;
     
