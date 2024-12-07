@@ -1,4 +1,4 @@
-package sg.edu.nus.iss.vttp5a_practice_workshop.controller;
+package sg.edu.nus.iss.vttp5a_practice_workshop.controller.login;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,5 +42,15 @@ public class LoginController {
 
         // Redirect to list page
         return "redirect:/list";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        session.removeAttribute("user");
+        session.invalidate();
+
+        System.out.println("logout successful");
+        
+        return "redirect:/login";
     }
 }
