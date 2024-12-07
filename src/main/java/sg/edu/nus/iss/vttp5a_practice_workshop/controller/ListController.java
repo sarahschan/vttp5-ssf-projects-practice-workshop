@@ -1,6 +1,5 @@
 package sg.edu.nus.iss.vttp5a_practice_workshop.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,21 +19,21 @@ import sg.edu.nus.iss.vttp5a_practice_workshop.service.TaskService;
 
 @Controller
 @RequestMapping("/list")
-public class ListingController {
+public class ListController {
     
     @Autowired
     TaskService taskService;
 
     @GetMapping()
-    public String listPage(@RequestParam(name="status", required=false) String status, Model model){
+    public String listPage(@RequestParam(required=false) String status, Model model){
 
         if (status != null && !status.isEmpty()){
             // if filter status is set, filter the tasks and return the list
             // remember to check if the status is "in+progress"
-            if (status.equals("in+progress"))
+            if (status.equals("in+progress")){
                 status = status.replace("+", " ");
-                System.out.println("'in+progress' -> 'in progress'");
-                
+            }
+
             List<Task> filteredList = taskService.filterByStatus(status, Constant.TASKKEY);
             model.addAttribute("todoList", filteredList);
 

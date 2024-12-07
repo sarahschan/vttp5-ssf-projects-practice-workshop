@@ -51,15 +51,17 @@
 
             <tbody>
                 <tr th:each="task : ${todoList}">
-                    <td th:text="${task.id}"></td>
+                    <td th:text="${task.id}" class="col-1"></td>
                     <td th:text="${task.name}"></td>
-                    <td th:text="${task.description}"></td>
+                    <td th:text="${task.description}" class="col-3"></td>
                     <td th:text="${task.dueDate}"></td>
                     <td th:text="${task.priority}"></td>
-                    <td th:text="${task.status}"></td>
+                    <td th:text="${task.status}" class="col-1"></td>
                     <td th:text="${task.createdOn}"></td>
                     <td th:text="${task.updatedOn}"></td>
-                    <td>Buttons</td>
+                    <td><a class="btn btn-secondary btn-sm" th:href="@{#}">Edit</a>
+                        <br><br>
+                        <a class="btn btn-danger btn-sm" th:href="@{#}">Delete</a></td>
                 </tr>
             </tbody>
         </table>
