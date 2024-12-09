@@ -27,12 +27,13 @@ public class Vttp5aPracticeWorkshopApplication implements CommandLineRunner{
 		//	 remember that this can throw a FileNotFound Exception
 		try {
 			fileService.loadFile();
+			System.out.println("todos.txt successfully read to redis");
+
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 
-		System.out.println("todos.txt successfully read to redis");
 
 	}
 
